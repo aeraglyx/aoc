@@ -1,7 +1,7 @@
 use std::fs;
 
 fn main() {
-    let input: String = fs::read_to_string("src/input.txt").unwrap();
+    let input: String = fs::read_to_string("inputs/day_01.txt").unwrap();
     let lines: Vec<&str> = input.lines().collect();
 
     let mut accum = 50;
