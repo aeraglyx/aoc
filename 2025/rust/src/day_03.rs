@@ -1,26 +1,33 @@
 use std::fs;
 
+
+fn get_joltage(line: &str, n: usize) -> i64 {
+    let mut digits: Vec<u8> = line.chars().map(|c| c as u8 - 0x30).collect();
+    let mut digits_found: Vec<u8> = Vec::new();
+    for i in 1..=n {
+        let total_bats = digits.len();
+        let end_id: usize = total_bats + i - n;
+        let found_digit: u8 = *digits[0..end_id].iter().max().unwrap();
+        let found_id = digits.iter().position(|c| *c == found_digit).unwrap();
+        digits.drain(0..=found_id);
+        digits_found.push(found_digit);
+    }
+    digits_found.into_iter()
+        .fold(0, |accum, digit| accum * 10 + digit as i64)
+}
+
+
 fn main() {
     let input: String = fs::read_to_string("inputs/day_03.txt").unwrap();
 
-    let mut sum_p1 = 0;
+    let mut sum_p1: i64 = 0;
+    let mut sum_p2: i64 = 0;
     for line in input.lines() {
-        let chars: Vec<char> = line.chars().collect();
-        let largest_num_1: char = *chars.iter().max().unwrap();
-        let largest_id = chars.iter().position(|c| *c == largest_num_1).unwrap();
-        let mut flip_later = false;
-        let the_rest = if largest_id == chars.len() - 1 {
-            flip_later = true;
-            line[.. line.len() - 1].to_string()
-        } else {
-            line[largest_id + 1 ..].to_string()
-        };
-        let largest_num_2: char = the_rest.chars().max().unwrap();
-        let mut joltage: Vec<char> = vec![largest_num_1, largest_num_2];
-        if flip_later { joltage.reverse(); }
-        let joltage: i32 = joltage.into_iter().collect::<String>().parse().unwrap();
-        sum_p1 += joltage;
+        sum_p1 += get_joltage(line, 2);
+        sum_p2 += get_joltage(line, 12);
     }
 
     println!("part 1: {sum_p1}");
+    println!("part 2: {sum_p2}");
 }
+
