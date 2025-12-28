@@ -1,3 +1,4 @@
+use std::fs;
 use std::collections::HashSet;
 
 
@@ -30,13 +31,12 @@ fn is_invalid_id_p2(id: u64) -> bool {
 
 
 fn main() {
-    let input: String = String::from("328412-412772,1610-2974,163-270,7693600637-7693779967,352-586,65728-111612,734895-926350,68-130,183511-264058,8181752851-8181892713,32291-63049,6658-12472,720-1326,21836182-21869091,983931-1016370,467936-607122,31-48,6549987-6603447,8282771161-8282886238,7659673-7828029,2-18,7549306131-7549468715,3177-5305,20522-31608,763697750-763835073,5252512393-5252544612,6622957-6731483,9786096-9876355,53488585-53570896");
+    let input: String = fs::read_to_string("../inputs/day_02.txt").unwrap();
 
-    let ranges: Vec<&str> = input.split(',').collect();
     let mut invalid_ids_p1: Vec<u64> = Vec::new();
     let mut invalid_ids_p2: Vec<u64> = Vec::new();
 
-    for range in &ranges {
+    for range in input.split(',') {
         let start_end: Vec<&str> = range.split("-").collect();
         let start: u64 = start_end[0].parse().unwrap();
         let end: u64 = start_end[1].parse().unwrap();

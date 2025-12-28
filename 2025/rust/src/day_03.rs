@@ -18,7 +18,7 @@ fn get_joltage(line: &str, n: usize) -> i64 {
 
 
 fn main() {
-    let input: String = fs::read_to_string("inputs/day_03.txt").unwrap();
+    let input: String = fs::read_to_string("../inputs/day_03.txt").unwrap();
 
     let mut sum_p1: i64 = 0;
     let mut sum_p2: i64 = 0;
